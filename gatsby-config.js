@@ -37,5 +37,6 @@ module.exports = {
         purgeOnly: ["src/styles/tailwind.css"],
       },
     },
+    `gatsby-theme-material-ui`
   ],
 }
