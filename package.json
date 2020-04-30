@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "material-ui-appshell",
   "private": true,
   "description": "A simple starter to get up and developing quickly with Gatsby",
   "version": "0.1.0",
@@ -7,6 +7,7 @@
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.2",
     "@material-ui/core": "^4.9.12",
+    "@material-ui/icons": "^4.9.1",
     "@tailwindcss/custom-forms": "^0.2.1",
     "cross-env": "^7.0.2",
     "cssnano": "^4.1.10",
@@ -28,7 +29,9 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.0.0",
-    "tailwindcss": "^1.3.5"
+    "react-query": "^1.2.9",
+    "tailwindcss": "^1.3.5",
+    "zustand": "^2.2.3"
   },
   "devDependencies": {
     "prettier": "2.0.5"
