@@ -3,14 +3,15 @@ import React from "react"
 
 // import Button from '@material-ui/core/Button';
 
-import Layout from "../components/layout"
+// import Layout from "../components/layout"
 // import Image from "../components/image"
 // import SEO from "../components/seo"
-import MiniDrawer from "../components/MiniDrawer";
+import Layout from "../components/MiniDrawer";
+import Typography from '@material-ui/core/Typography';
 
 const IndexPage = () => (
   <Layout>
-    <MiniDrawer />
+    <Typography variant="title">This is the main content in "index.js"</Typography>
   </Layout>
   // <Layout>
   //   <SEO title="Home" />

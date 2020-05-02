@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Router, Link, useParams  } from "@reach/router";
+import { Router, Link, useParams } from "@reach/router";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -91,7 +91,7 @@ const PlayList = () => {
   return <Typography variant="title">PlayList</Typography>
 }
 
-export default function MiniDrawer() {
+export default function Layout({ children }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -183,9 +183,7 @@ export default function MiniDrawer() {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Router basepath="/playlist">
-          <PlayList path="/" />
-        </Router>
+        {children}
       </main>
     </div>
   );

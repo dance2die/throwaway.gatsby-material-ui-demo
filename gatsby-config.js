@@ -41,7 +41,7 @@ module.exports = {
     {
       // https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/*`] },
+      options: { prefixes: [`/playlist/*`] },
     },
   ],
 }
