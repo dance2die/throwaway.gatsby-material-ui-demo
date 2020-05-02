@@ -37,6 +37,11 @@ module.exports = {
         purgeOnly: ["src/styles/tailwind.css"],
       },
     },
-    `gatsby-theme-material-ui`
+    `gatsby-theme-material-ui`,
+    {
+      // https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/*`] },
+    },
   ],
 }

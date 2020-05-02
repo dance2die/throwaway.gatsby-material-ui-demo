@@ -1,15 +1,17 @@
 import React from "react"
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
 
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+// import Image from "../components/image"
+// import SEO from "../components/seo"
 import MiniDrawer from "../components/MiniDrawer";
 
 const IndexPage = () => (
-  <MiniDrawer />
+  <Layout>
+    <MiniDrawer />
+  </Layout>
   // <Layout>
   //   <SEO title="Home" />
   //   <h1>Hi people</h1>
