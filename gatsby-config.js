@@ -38,10 +38,10 @@ module.exports = {
       },
     },
     `gatsby-theme-material-ui`,
-    {
-      // https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/playlist/*`] },
-    },
+    // {
+    //   // https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/
+    //   resolve: `gatsby-plugin-create-client-paths`,
+    //   options: { prefixes: [`/playlist/*`] },
+    // },
   ],
 }

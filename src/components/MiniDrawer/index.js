@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Router, Link, useParams } from "@reach/router";
+import { Router, Link, useParams, useLocation } from "@reach/router";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -81,6 +81,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const PlayListItem = () => {
+  const params = useParams();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    console.info(`params ==>`, JSON.stringify(params, null, 2), `location=>`, location)
+  }, [params]);
+
+  return <Typography variant="title">PlayList {location.search}</Typography>
+}
+
+
 const PlayList = () => {
   const params = useParams();
 
@@ -155,7 +167,7 @@ export default function Layout({ children }) {
         <Divider />
         <List>
           {["Watch later"].map((text, index) => (
-            <ListItem button component={Link} to="playlist?list=watchlater">
+            <ListItem button component={Link} to="/?list=watchlater">
               <ListItemIcon>
                 <WatchLaterIcon />
               </ListItemIcon>
@@ -166,13 +178,13 @@ export default function Layout({ children }) {
         <Divider />
         <List>
           {/* https://github.com/mui-org/material-ui/issues/1404#issuecomment-335981845 */}
-          <ListItem button component={Link} to="playlist?list=goodsongs">
+          <ListItem button component={Link} to="/?list=goodsongs">
             <ListItemIcon>
               <PlaylistPlayIcon />
             </ListItemIcon>
             <ListItemText primary="Good Songs" />
           </ListItem>
-          <ListItem button component={Link} to="playlist?list=javascript">
+          <ListItem button component={Link} to="/?list=javascript">
             <ListItemIcon>
               <PlaylistPlayIcon />
             </ListItemIcon>
@@ -183,7 +195,9 @@ export default function Layout({ children }) {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}
+        <Router basepath="/">
+          <PlayListItem path="/" />
+        </Router>
       </main>
     </div>
   );
