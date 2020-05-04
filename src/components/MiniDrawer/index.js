@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Router, Link, useParams, useLocation } from "@reach/router";
+import { Router, Link, useLocation } from "@reach/router";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -21,6 +21,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 // import InboxIcon from "@material-ui/icons/MoveToInbox";
 // import MailIcon from "@material-ui/icons/Mail";
 // import Button from "@material-ui/core/Button";
@@ -82,26 +83,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PlayListItem = () => {
-  const params = useParams();
+  // const params = useParams();
   const location = useLocation();
 
-  React.useEffect(() => {
-    console.info(`params ==>`, JSON.stringify(params, null, 2), `location=>`, location)
-  }, [params]);
+  // React.useEffect(() => {
+  //   console.info(`params ==>`, JSON.stringify(params, null, 2), `location=>`, location)
+  // }, [params]);
 
   return <Typography variant="title">PlayList {location.search}</Typography>
 }
 
 
-const PlayList = () => {
-  const params = useParams();
+// const PlayList = () => {
+//   const params = useParams();
 
-  React.useEffect(() => {
-    console.info(`params ==>`, JSON.stringify(params, null, 2))
-  }, [params]);
+//   React.useEffect(() => {
+//     console.info(`params ==>`, JSON.stringify(params, null, 2))
+//   }, [params]);
 
-  return <Typography variant="title">PlayList</Typography>
-}
+//   return <Typography variant="title">PlayList</Typography>
+// }
 
 export default function Layout({ children }) {
   const classes = useStyles();
@@ -139,6 +140,9 @@ export default function Layout({ children }) {
               </Typography>
             </Box>
           </Typography>
+          <IconButton color="inherit">
+            <AccountCircleIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
