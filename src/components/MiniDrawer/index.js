@@ -22,9 +22,6 @@ import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-// import InboxIcon from "@material-ui/icons/MoveToInbox";
-// import MailIcon from "@material-ui/icons/Mail";
-// import Button from "@material-ui/core/Button";
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 
@@ -92,17 +89,6 @@ const PlayListItem = () => {
 
   return <Typography variant="title">PlayList {location.search}</Typography>
 }
-
-
-// const PlayList = () => {
-//   const params = useParams();
-
-//   React.useEffect(() => {
-//     console.info(`params ==>`, JSON.stringify(params, null, 2))
-//   }, [params]);
-
-//   return <Typography variant="title">PlayList</Typography>
-// }
 
 export default function Layout({ children }) {
   const classes = useStyles();
