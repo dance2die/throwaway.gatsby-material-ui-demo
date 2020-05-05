@@ -2,7 +2,7 @@ import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
-import firebaseConfig from '../config'
+import firebaseConfig from './config'
 
 class Firebase {
   constructor() {

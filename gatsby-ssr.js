@@ -1,7 +1,9 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
+import React from 'react';
+import { FirebaseContext } from './src/firebase/context';
+import Firebase from './src/firebase/firebase'
 
-// You can delete this file if you're not using it
+import "./src/styles/tailwind.css";
+
+export const wrapRootElement = ({ element }) => (
+  <FirebaseContext.Provider value={new Firebase()}>{element}</FirebaseContext.Provider>
+)

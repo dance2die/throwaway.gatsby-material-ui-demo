@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { Router, Link, useLocation } from "@reach/router";
 
@@ -24,6 +24,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+
+import { useUser, useFirebase } from '../../firebase/context'
 
 
 const drawerWidth = 240;
@@ -94,6 +96,24 @@ export default function Layout({ children }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+
+  const { signIn, signOut, db } = useFirebase()
+  const user = useUser()
+
+  useEffect(() => {
+    console.info(`user ===>`, user)
+  }, [user])
+
+  useEffect(() => {
+    if (!user) return
+
+    const usersRef = db.ref(`/users/${user.uid}`)
+    usersRef.on('value', snapshot => {
+      console.log(`usersRef snapshot`, snapshot.val())
+    })
+
+    return () => usersRef.off()
+  })
 
   const toggleDrawer = () => setOpen(o => !o);
 
