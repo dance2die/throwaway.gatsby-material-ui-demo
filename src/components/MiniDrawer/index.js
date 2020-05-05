@@ -146,8 +146,9 @@ export default function Layout({ children }) {
               </Typography>
             </Box>
           </Typography>
-          <IconButton color="inherit">
-            <AccountCircleIcon />
+          <IconButton onClick={user ? signOut : signIn} color="inherit">
+            {user && <img src={user.photoURL} alt="user" />}
+            {!user && <AccountCircleIcon />}
           </IconButton>
         </Toolbar>
       </AppBar>
