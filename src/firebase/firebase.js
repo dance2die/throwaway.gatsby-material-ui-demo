@@ -14,6 +14,10 @@ class Firebase {
 
     this.db = app.database()
     this.googleProvider = new app.auth.GoogleAuthProvider()
+    this.googleProvider.addScope('email')
+    this.googleProvider.addScope('profile')
+    this.googleProvider.addScope('openid')
+    this.googleProvider.addScope('https://www.googleapis.com/auth/youtube')
   }
 
   signIn = () => this.auth.signInWithPopup(this.googleProvider)
