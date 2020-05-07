@@ -20,6 +20,7 @@ const [useAuth] = create(set => ({
       firebase.db.ref(`/users/${user.uid}`).set({
         email: user.email,
         username: user.displayName,
+        credential
       })
 
       set({ state: { user, credential } })

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import clsx from "clsx"
 import { Router, Link, useLocation } from "@reach/router"
+import { useQuery } from "react-query"
 
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 
@@ -88,7 +89,31 @@ const PlayListItem = () => {
   //   console.info(`params ==>`, JSON.stringify(params, null, 2), `location=>`, location)
   // }, [params]);
 
-  return <Typography variant="title">PlayList {location.search}</Typography>
+  return <Typography variant="caption">PlayList {location.search}</Typography>
+}
+
+const fetchPlaylist = async (key, credential) => {
+  console.info(`fetchPlaylist key, credential ===>`, key, credential)
+
+  if (!credential) return null;
+
+  try {
+    const json = await fetch(
+      `https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true`,
+      {
+        headers: {
+          "Content-Length": 0,
+          Authorization: `Bearer ${credential.oauthAccessToken}`,
+        },
+      }
+    ).then(_ => _.json())
+
+    console.info(`playlist ===>`, json)
+    return json
+  } catch (error) {
+    console.info(`error!!!!!!!!!!!!!`, error)
+    return null
+  }
 }
 
 export default function Layout({ children }) {
@@ -96,23 +121,32 @@ export default function Layout({ children }) {
   const theme = useTheme()
   const [open, setOpen] = React.useState(true)
 
-  const { db } = useFirebase(store => store.firebase)
+  // const { db } = useFirebase(store => store.firebase)
   const { user, logIn, logOut, credential } = useAuthentication()
 
-  useEffect(() => {
-    console.info(`user ===>`, user, `credential =>`, credential)
-  }, [user, credential])
+  const { status, data, error } = useQuery(
+    ["playlist", credential],
+    fetchPlaylist
+  )
 
   useEffect(() => {
-    if (!user) return
+    console.info(`playlist status, data, error ==> `, status, data, error)
+  }, [status, data, error])
 
-    const usersRef = db.ref(`/users/${user.uid}`)
-    usersRef.on("value", snapshot => {
-      console.log(`usersRef snapshot`, snapshot.val())
-    })
+  // useEffect(() => {
+  //   console.info(`user ===>`, user, `credential =>`, credential)
+  // }, [user, credential])
 
-    return () => usersRef.off()
-  })
+  // useEffect(() => {
+  //   if (!user) return
+
+  //   const usersRef = db.ref(`/users/${user.uid}`)
+  //   usersRef.on("value", snapshot => {
+  //     console.log(`usersRef snapshot`, snapshot.val())
+  //   })
+
+  //   return () => usersRef.off()
+  // })
 
   const toggleDrawer = () => setOpen(o => !o)
 
@@ -142,14 +176,15 @@ export default function Layout({ children }) {
               </Box>
               <Typography
                 className="tracking-tight leading-relaxed"
-                variant="title"
+                variant="h3"
+                component="h1"
               >
                 NeoTube Playlist Organizer
               </Typography>
             </Box>
           </Typography>
           <IconButton onClick={user ? logOut : logIn} color="inherit">
-            {user && <img src={user.photoURL} alt="user" />}
+            {user && <img style={{width: '64px'}} src={user.photoURL} alt="user" />}
             {!user && <AccountCircleIcon />}
           </IconButton>
         </Toolbar>
@@ -180,7 +215,7 @@ export default function Layout({ children }) {
         <Divider />
         <List>
           {["Watch later"].map((text, index) => (
-            <ListItem button component={Link} to="/?list=watchlater">
+            <ListItem key={text} button component={Link} to="/?list=watchlater">
               <ListItemIcon>
                 <WatchLaterIcon />
               </ListItemIcon>
