@@ -1,71 +1,70 @@
-import React, { useEffect } from "react";
-import clsx from "clsx";
-import { Router, Link, useLocation } from "@reach/router";
+import React, { useEffect } from "react"
+import clsx from "clsx"
+import { Router, Link, useLocation } from "@reach/router"
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles"
 
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Box from "@material-ui/core/Box";
+import Drawer from "@material-ui/core/Drawer"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import List from "@material-ui/core/List"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Typography from "@material-ui/core/Typography"
+import Divider from "@material-ui/core/Divider"
+import IconButton from "@material-ui/core/IconButton"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemText from "@material-ui/core/ListItemText"
+import Box from "@material-ui/core/Box"
 
-import MenuIcon from "@material-ui/icons/Menu";
-import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+import MenuIcon from "@material-ui/icons/Menu"
+import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined"
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
+import ChevronRightIcon from "@material-ui/icons/ChevronRight"
+import AccountCircleIcon from "@material-ui/icons/AccountCircle"
+import WatchLaterIcon from "@material-ui/icons/WatchLater"
+import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay"
 
-import { useUser, useFirebase } from '../../firebase/context'
+import { useAuthentication, useFirebase } from "../../firebase/context"
 
-
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
-    }
+      width: theme.spacing(9) + 1,
+    },
   },
   toolbar: {
     display: "flex",
@@ -73,17 +72,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
-  }
-}));
+    padding: theme.spacing(3),
+  },
+}))
 
 const PlayListItem = () => {
   // const params = useParams();
-  const location = useLocation();
+  const location = useLocation()
 
   // React.useEffect(() => {
   //   console.info(`params ==>`, JSON.stringify(params, null, 2), `location=>`, location)
@@ -93,29 +92,29 @@ const PlayListItem = () => {
 }
 
 export default function Layout({ children }) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const classes = useStyles()
+  const theme = useTheme()
+  const [open, setOpen] = React.useState(true)
 
-  const { signIn, signOut, db } = useFirebase()
-  const user = useUser()
+  const { db } = useFirebase(store => store.firebase)
+  const { user, logIn, logOut, credential } = useAuthentication()
 
   useEffect(() => {
-    console.info(`user ===>`, user)
-  }, [user])
+    console.info(`user ===>`, user, `credential =>`, credential)
+  }, [user, credential])
 
   useEffect(() => {
     if (!user) return
 
     const usersRef = db.ref(`/users/${user.uid}`)
-    usersRef.on('value', snapshot => {
+    usersRef.on("value", snapshot => {
       console.log(`usersRef snapshot`, snapshot.val())
     })
 
     return () => usersRef.off()
   })
 
-  const toggleDrawer = () => setOpen(o => !o);
+  const toggleDrawer = () => setOpen(o => !o)
 
   return (
     <div className={classes.root}>
@@ -123,7 +122,7 @@ export default function Layout({ children }) {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
@@ -141,12 +140,15 @@ export default function Layout({ children }) {
               <Box mr={0.3} mt={-0.5}>
                 <LiveTvOutlinedIcon color="secondary" fontSize="large" />
               </Box>
-              <Typography className="tracking-tight leading-relaxed" variant="title">
+              <Typography
+                className="tracking-tight leading-relaxed"
+                variant="title"
+              >
                 NeoTube Playlist Organizer
               </Typography>
             </Box>
           </Typography>
-          <IconButton onClick={user ? signOut : signIn} color="inherit">
+          <IconButton onClick={user ? logOut : logIn} color="inherit">
             {user && <img src={user.photoURL} alt="user" />}
             {!user && <AccountCircleIcon />}
           </IconButton>
@@ -157,13 +159,13 @@ export default function Layout({ children }) {
         variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
+          [classes.drawerClose]: !open,
         })}
         classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
+            [classes.drawerClose]: !open,
+          }),
         }}
       >
         <div className={classes.toolbar}>
@@ -171,8 +173,8 @@ export default function Layout({ children }) {
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
-                <ChevronLeftIcon />
-              )}
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
@@ -211,5 +213,5 @@ export default function Layout({ children }) {
         </Router>
       </main>
     </div>
-  );
+  )
 }

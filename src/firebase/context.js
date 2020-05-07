@@ -1,42 +1,57 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react"
+import { useEffect, useCallback } from "react"
+import create from "zustand"
 
-const FirebaseContext = createContext()
+import Firebase from "./firebase"
 
-function useFirebase() {
-  const firebase = useContext(FirebaseContext)
-  if (firebase === undefined) throw Error("use this under FirebaseContext")
-  return firebase
+const [useFirebase] = create(() => ({
+  firebase: new Firebase(),
+}))
+
+const initialAuthState = {
+  user: null,
+  credential: null,
 }
+const [useAuth] = create(set => ({
+  state: initialAuthState,
+  signIn: async firebase =>
+    firebase.signIn().then(({ user, credential }) => {
+      console.info(`useAuthentication user, credential ==>`, user, credential)
 
-function useUser() {
-  const { auth, db } = useFirebase()
-  const [user, setUser] = useState(null)
-
-  const saveUser = useCallback(
-    user => {
-      setUser(user)
-
-      if (!user) return
-      db.ref(`/users/${user.uid}`).set({
+      firebase.db.ref(`/users/${user.uid}`).set({
         email: user.email,
         username: user.displayName,
       })
-    },
-    [db]
-  )
+
+      set({ state: { user, credential } })
+    }),
+  signOut: async firebase => {
+    await firebase.signOut()
+    set(initialAuthState)
+  },
+  setUser: user => set(store => ({ ...store, state: { ...store.state, user } })),
+}))
+
+function useAuthentication() {
+  const user = useAuth(store => store.state.user)
+  const credential = useAuth(store => store.state.credential)
+  const setUser = useAuth(store => store.setUser)
+  const signIn = useAuth(store => store.signIn)
+  const signOut = useAuth(store => store.signOut)
+  const firebase = useFirebase(store => store.firebase)
+
+  const logIn = () => signIn(firebase)
+  const logOut = () => signOut(firebase)
+
+  const saveUser = useCallback(setUser, [user])
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(saveUser)
-    return () => unsubscribe()
-  }, [auth, saveUser])
+    if (!firebase || !firebase.auth) return
 
-  return user
+    const unsubscribe = firebase.auth.onAuthStateChanged(saveUser)
+    return () => unsubscribe()
+  }, [firebase, firebase.auth, saveUser])
+
+  return { logIn, logOut, user, credential }
 }
 
-export { FirebaseContext, useFirebase, useUser }
+export { useFirebase, useAuthentication }
