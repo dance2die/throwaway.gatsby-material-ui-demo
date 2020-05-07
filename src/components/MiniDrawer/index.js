@@ -99,7 +99,7 @@ const fetchPlaylist = async (key, credential) => {
 
   try {
     const json = await fetch(
-      `https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true`,
+      `https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&maxResults=5`,
       {
         headers: {
           "Content-Length": 0,
@@ -178,7 +178,7 @@ export default function Layout({ children }) {
               </Box>
               <Typography
                 className="tracking-tight leading-relaxed"
-                variant="h3"
+                variant="h5"
                 component="h1"
               >
                 NeoTube Playlist Organizer
@@ -186,7 +186,7 @@ export default function Layout({ children }) {
             </Box>
           </Typography>
           <IconButton onClick={user ? logOut : logIn} color="inherit">
-            {user && <img style={{width: '64px'}} src={user.photoURL} alt="user" />}
+            {user && <img style={{width: '32px', margin: 0}} src={user.photoURL} alt="user" />}
             {!user && <AccountCircleIcon />}
           </IconButton>
         </Toolbar>
