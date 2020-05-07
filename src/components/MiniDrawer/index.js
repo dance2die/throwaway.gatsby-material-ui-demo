@@ -26,7 +26,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import WatchLaterIcon from "@material-ui/icons/WatchLater"
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay"
 
-import { useAuthentication, useFirebase } from "../../firebase/context"
+import { useAuthentication } from "../../firebase/context"
 
 const drawerWidth = 240
 
@@ -126,7 +126,9 @@ export default function Layout({ children }) {
 
   const { status, data, error } = useQuery(
     ["playlist", credential],
-    fetchPlaylist
+    fetchPlaylist, {
+      staleTime: Infinity
+    }
   )
 
   useEffect(() => {
