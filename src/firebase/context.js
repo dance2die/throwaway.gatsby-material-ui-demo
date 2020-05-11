@@ -29,7 +29,6 @@ const [useAuth] = create(set => ({
     await firebase.signOut()
     set(initialAuthState)
   },
-  setState: state => set(store => ({ ...store, ...state })),
   setUser: user =>
     set(store => ({ ...store, state: { ...store.state, user } })),
   setCredential: credential =>
@@ -40,23 +39,21 @@ function useAuthentication() {
   const user = useAuth(store => store.state.user)
   const credential = useAuth(store => store.state.credential)
   const setUser = useAuth(store => store.setUser)
-  const setState = useAuth(store => store.setState)
+  const setCredential = useAuth(store => store.setCredential)
   const signIn = useAuth(store => store.signIn)
   const signOut = useAuth(store => store.signOut)
   const firebase = useFirebase(store => store.firebase)
 
   // Try to load user & credential from Firebase on load
   useEffect(() => {
-    // if (user && credential) return
     if (!user) return;
 
-    firebase.db.ref(`/users/${user.uid}`).once("value", data => {
+    firebase.db.ref(`/users/${user.uid}`).once("value", snapshot => {
+      const data = snapshot.val()
       console.info(`useAuthentication onload data`, data)
-      setState({ user: data.user, credential: data.credential })
-      // if (data.user) setUser(user)
-      // if (data.credential) setCredential(credential)
+      setCredential(credential)
     })
-  }, [credential])
+  }, [user, firebase.db, setCredential, credential])
 
   const logIn = () => signIn(firebase)
   const logOut = () => signOut(firebase)

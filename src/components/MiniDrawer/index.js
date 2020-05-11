@@ -27,6 +27,7 @@ import WatchLaterIcon from "@material-ui/icons/WatchLater"
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay"
 
 import { useAuthentication } from "../../firebase/context"
+import { useMemo } from "react"
 
 const drawerWidth = 240
 
@@ -103,7 +104,7 @@ const fetchPlaylist = async (key, credential) => {
       {
         headers: {
           "Content-Length": 0,
-          Authorization: `Bearer ${credential.oauthAccessToken}`,
+          Authorization: `Bearer ${credential.oauthAccessToken || credential.accessToken}`,
         },
       }
     ).then(_ => _.json())
@@ -123,13 +124,18 @@ export default function Layout({ children }) {
 
   // const { db } = useFirebase(store => store.firebase)
   const { user, logIn, logOut, credential } = useAuthentication()
-
+  const credentialCache = useMemo(() => credential, [credential])
   const { status, data, error } = useQuery(
-    ["playlist", credential],
+    ["playlist", credentialCache],
     fetchPlaylist, {
       staleTime: Infinity
     }
   )
+
+  useEffect(() => {
+    console.info(`playlist credentialCache ==> `, credentialCache)
+  }, [credentialCache])
+
 
   useEffect(() => {
     console.info(`playlist status, data, error ==> `, status, data, error)
