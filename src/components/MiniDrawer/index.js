@@ -1,4 +1,5 @@
-import React, { useEffect } from "react"
+// import React, { useEffect } from "react"
+import React from "react"
 import clsx from "clsx"
 import { Router, Link, useLocation } from "@reach/router"
 
@@ -21,11 +22,11 @@ import MenuIcon from "@material-ui/icons/Menu"
 import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 import ChevronRightIcon from "@material-ui/icons/ChevronRight"
-import AccountCircleIcon from "@material-ui/icons/AccountCircle"
+// import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import WatchLaterIcon from "@material-ui/icons/WatchLater"
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay"
 
-import { useAuthentication, useFirebase } from "../../firebase/context"
+// import { useAuthentication, useFirebase } from "../../firebase/context"
 
 const drawerWidth = 240
 
@@ -96,23 +97,23 @@ export default function Layout({ children }) {
   const theme = useTheme()
   const [open, setOpen] = React.useState(true)
 
-  const { db } = useFirebase(store => store.firebase)
-  const { user, logIn, logOut, credential } = useAuthentication()
+  // const { db } = useFirebase(store => store.firebase)
+  // const { user, logIn, logOut, credential } = useAuthentication()
 
-  useEffect(() => {
-    console.info(`user ===>`, user, `credential =>`, credential)
-  }, [user, credential])
+  // useEffect(() => {
+  //   console.info(`user ===>`, user, `credential =>`, credential)
+  // }, [user, credential])
 
-  useEffect(() => {
-    if (!user) return
+  // useEffect(() => {
+  //   if (!user) return
 
-    const usersRef = db.ref(`/users/${user.uid}`)
-    usersRef.on("value", snapshot => {
-      console.log(`usersRef snapshot`, snapshot.val())
-    })
+  //   const usersRef = db.ref(`/users/${user.uid}`)
+  //   usersRef.on("value", snapshot => {
+  //     console.log(`usersRef snapshot`, snapshot.val())
+  //   })
 
-    return () => usersRef.off()
-  })
+  //   return () => usersRef.off()
+  // })
 
   const toggleDrawer = () => setOpen(o => !o)
 
@@ -148,10 +149,10 @@ export default function Layout({ children }) {
               </Typography>
             </Box>
           </Typography>
-          <IconButton onClick={user ? logOut : logIn} color="inherit">
+          {/* <IconButton onClick={user ? logOut : logIn} color="inherit">
             {user && <img src={user.photoURL} alt="user" />}
             {!user && <AccountCircleIcon />}
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
 
