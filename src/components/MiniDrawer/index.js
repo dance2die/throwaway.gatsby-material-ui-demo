@@ -1,4 +1,5 @@
-import React, { useEffect } from "react"
+// import React, { useEffect } from "react"
+import React from "react"
 import clsx from "clsx"
 import { Router, Link, useLocation } from "@reach/router"
 import { useQuery } from "react-query"
@@ -22,12 +23,16 @@ import MenuIcon from "@material-ui/icons/Menu"
 import LiveTvOutlinedIcon from "@material-ui/icons/LiveTvOutlined"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 import ChevronRightIcon from "@material-ui/icons/ChevronRight"
-import AccountCircleIcon from "@material-ui/icons/AccountCircle"
+// import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import WatchLaterIcon from "@material-ui/icons/WatchLater"
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay"
 
+<<<<<<< HEAD
 import { useAuthentication } from "../../firebase/context"
 import { useMemo } from "react"
+=======
+// import { useAuthentication, useFirebase } from "../../firebase/context"
+>>>>>>> aa51512adc3f048d8faabd888cc94c2e50ae6eba
 
 const drawerWidth = 240
 
@@ -123,6 +128,7 @@ export default function Layout({ children }) {
   const [open, setOpen] = React.useState(true)
 
   // const { db } = useFirebase(store => store.firebase)
+<<<<<<< HEAD
   const { user, logIn, logOut, credential } = useAuthentication()
   const credentialCache = useMemo(() => credential, [credential])
   const { status, data, error } = useQuery(
@@ -145,6 +151,14 @@ export default function Layout({ children }) {
   //   console.info(`user ===>`, user, `credential =>`, credential)
   // }, [user, credential])
 
+=======
+  // const { user, logIn, logOut, credential } = useAuthentication()
+
+  // useEffect(() => {
+  //   console.info(`user ===>`, user, `credential =>`, credential)
+  // }, [user, credential])
+
+>>>>>>> aa51512adc3f048d8faabd888cc94c2e50ae6eba
   // useEffect(() => {
   //   if (!user) return
 
@@ -191,10 +205,15 @@ export default function Layout({ children }) {
               </Typography>
             </Box>
           </Typography>
+<<<<<<< HEAD
           <IconButton onClick={user ? logOut : logIn} color="inherit">
             {user && <img style={{width: '32px', margin: 0}} src={user.photoURL} alt="user" />}
+=======
+          {/* <IconButton onClick={user ? logOut : logIn} color="inherit">
+            {user && <img src={user.photoURL} alt="user" />}
+>>>>>>> aa51512adc3f048d8faabd888cc94c2e50ae6eba
             {!user && <AccountCircleIcon />}
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
 

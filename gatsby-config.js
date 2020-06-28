@@ -34,13 +34,13 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
     "gatsby-plugin-postcss",
-    {
-      resolve: "gatsby-plugin-purgecss",
-      options: {
-        tailwind: true,
-        purgeOnly: ["src/styles/tailwind.css"],
-      },
-    },
+    // {
+    //   resolve: "gatsby-plugin-purgecss",
+    //   options: {
+    //     tailwind: true,
+    //     purgeOnly: ["src/styles/tailwind.css"],
+    //   },
+    // },
     `gatsby-theme-material-ui`,
     // {
     //   // https://www.gatsbyjs.org/packages/gatsby-plugin-create-client-paths/
